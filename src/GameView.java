@@ -85,9 +85,9 @@ public class GameView implements IGameView {
         for (IPlayer player : players) {
             terminal.displayMessage(player.getName() + " | Score: " + player.getScore());
 
-            terminal.displayMessage("  ↳ " + player.getWinConditionDescription());
+            terminal.displayMessage("  -> " + player.getWinConditionDescription());
             int progress = estimateProgress(player);
-            terminal.displayMessage("  ↳ Progress: " + progress + " / 5" );
+            terminal.displayMessage("  -> Progress: " + progress + " / 5" );
         }
     }
 
