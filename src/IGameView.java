@@ -1,59 +1,38 @@
 import java.util.List;
 
+// Displays current round status, player progress, recent plays, etc. (part of view)
 public interface IGameView {
 
-    /*
-    displays welcome message and game introduction
-     */
+    // Displays welcome message
     public void showWelcomeMessage();
 
-    /*
-    displays the win condition for each player
-     */
+    // Displays win conditions
     public void showWinConditions(List<IPlayer> players);
 
-    /*
-    displays the start of the game and the current player (as in whose turn it is)
-     */
+    // Displays player for that round
     public void showGameStart(IPlayer currentPlayer);
 
-    /*
-    prompts the current player to enter a movie title
-     */
+    // Displays prompt for movie
     public void promptForMovie(IPlayer currentPlayer);
 
-    /*
-    displays a success message for a valid movie move
-     */
+    // Displays move success
     public void showMoveSuccess(String movieTitle, IPlayer currentPlayer);
 
-    /*
-    displays a message when input movie is invalid
-     */
+    // Displays invalid move
     public void showInvalidMove(String movieTitle);
 
-    /*
-    displays message when current player's timer runs out
-     */
+    // Displays player timeout
     public void showTimeout(IPlayer currentPlayer);
 
-    /*
-    displays the winner of the game
-     */
+    // Displays game winner
     public void showWinner(IPlayer winner);
 
-    /*
-    displays the start of the next player's turn
-     */
+    // Displays next player's turn
     public void showNextTurn(IPlayer currentPlayer);
 
-    /*
-    displays the last 5 movies played
-     */
+    // Displays recent movie history, genres, and links between them
     public void showMovieHistory(List<IMovie> recentMovies);
 
-    /*
-    displays the current progress and status of each player
-     */
+    // Displays player stats (individual score and progress towards win condition)
     public void showPlayerStats(List<IPlayer> players, int roundCount);
 }

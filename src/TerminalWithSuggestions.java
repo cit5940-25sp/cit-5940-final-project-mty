@@ -8,11 +8,10 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-
 import java.io.IOException;
 import java.util.*;
 
+// Sets up the terminal user interface, also has autocomplete and countdown logic
 public class TerminalWithSuggestions {
     private Terminal terminal;
     private Screen screen;
@@ -25,12 +24,14 @@ public class TerminalWithSuggestions {
     private String currentMovieGenres = "";
     private int secondsRemaining = 30;
 
+    // Constructor
     public TerminalWithSuggestions() throws IOException {
         terminal = new DefaultTerminalFactory().createTerminal();
         screen = new TerminalScreen(terminal);
         screen.startScreen();
     }
 
+    // Displays current movie information, contains countdown logic, handles player input
     public String getInputWithSuggestions(List<IMovie> movies, IMovie currentMovie, int timeLimitSeconds) throws IOException {
         dictionary.clear();
         for (IMovie movie : movies) {
@@ -116,12 +117,14 @@ public class TerminalWithSuggestions {
         }
     }
 
+    // Handles character of user input
     private void handleCharacter(char c) {
         currentInput.insert(cursorPosition - 2, c);
         cursorPosition++;
         updateSuggestions();
     }
 
+    // Handles backspace of user input
     private void handleBackspace() {
         if (cursorPosition > 2) {
             currentInput.deleteCharAt(cursorPosition - 3);
@@ -130,6 +133,7 @@ public class TerminalWithSuggestions {
         }
     }
 
+    // Updates user input suggestions
     private void updateSuggestions() {
         suggestions.clear();
         String prefix = currentInput.toString();
@@ -142,6 +146,7 @@ public class TerminalWithSuggestions {
         }
     }
 
+    // Updates screen
     private void updateScreen() throws IOException {
         synchronized (screen) {
             screen.clear();
@@ -169,6 +174,7 @@ public class TerminalWithSuggestions {
         }
     }
 
+    // Prints string to terminal
     private void printString(int column, int row, String text) {
         for (int i = 0; i < text.length(); i++) {
             screen.setCharacter(column + i, row,
@@ -176,6 +182,7 @@ public class TerminalWithSuggestions {
         }
     }
 
+    // Displays message to terminal
     public void displayMessage(String message) {
         try {
             printString(0, currentRow++, message);
@@ -191,6 +198,7 @@ public class TerminalWithSuggestions {
         }
     }
 
+    // Clears screen
     public void clearScreen() {
         try {
             screen.clear();
@@ -199,9 +207,5 @@ public class TerminalWithSuggestions {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public int getSecondsRemaining() {
-        return secondsRemaining;
     }
 }

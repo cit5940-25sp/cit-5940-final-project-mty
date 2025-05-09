@@ -3,18 +3,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-// Handles indexing and searching movies (uses map) (model)
+// Handles indexing and searching for movies (model)
 public class MovieIndex implements IMovieIndex {
     private Map<String, IMovie> indexByTitle = new HashMap<>();
     private Map<String, Set<IMovie>> indexByContributor = new HashMap<>();
 
-    //parses CSV file to get movie ID, title, year, and genre
+    // Parses CSV file to get movie ID, title, year, and genre
     @Override
     public Map<Integer, IMovie> loadMovies(String movieFile) {
         Map<Integer, IMovie> movieMap = new HashMap<>();
@@ -74,8 +73,7 @@ public class MovieIndex implements IMovieIndex {
     }
 
 
-// associates cast and crew with the movies loaded (all under contributors)
-    //used for queries when connecting movies
+    // Associates cast and crew with the movies loaded (all under contributors)
     @Override
     public void loadCast(String creditFile, Map<Integer, IMovie> movieMap) {
         int skippedLines = 0;
@@ -94,13 +92,11 @@ public class MovieIndex implements IMovieIndex {
                     String idStr = line.substring(0, firstComma).trim();
                     int id = Integer.parseInt(idStr);
 
-// Skip if ID not found in map
                     if (!movieMap.containsKey(id)) {
                         continue;
                     }
                     Movie movie = (Movie) movieMap.get(id);
 
-// Find end of cast JSON: first "]}" after second comma
                     int castStart = line.indexOf("[{", secondComma);
                     int castEnd = line.indexOf("}]", castStart) + 2;
                     if (castStart == -1 || castEnd <= 1) throw new Exception("Cast JSON malformed");
@@ -113,7 +109,6 @@ public class MovieIndex implements IMovieIndex {
 
                     String crewJson = line.substring(crewStart, crewEnd);
 
-                    // Parse cast
                     castJson = castJson.replaceAll("\"\"", "\"");
                     crewJson = crewJson.replaceAll("\"\"", "\"");
                     try {
@@ -162,11 +157,13 @@ public class MovieIndex implements IMovieIndex {
         }
     }
 
+    // Gets movie object by title
     @Override
     public IMovie getMovieByTitle(String title) {
         return indexByTitle.get(title.toLowerCase());
     }
 
+    // Gets list of movies that are connected to input movie
     @Override
     public List<IMovie> getConnectedMovies(IMovie movie) {
         Set<IMovie> connectedMovies = new HashSet<>();
@@ -183,6 +180,7 @@ public class MovieIndex implements IMovieIndex {
         return new ArrayList<>(connectedMovies);
     }
 
+    // Checks if index contains movie
     @Override
     public boolean containsMovie(String title) {
         return indexByTitle.containsKey(title.toLowerCase());

@@ -1,16 +1,12 @@
 import java.util.List;
 
+// Interface for win condition strategy (part of strategy pattern)
 public interface IWinConditionStrategy {
 
-    /*
-    returns true if given played movies satisfies the win condition
-    (played movies referred to the list of movies that player has played)
-     */
+    // Checks if win condition has been met
     public boolean checkWin(List<IMovie> playedMovies);
 
-    /*
-    returns a user friendly description of the win condition
-     */
+    // Returns English description of win condition
     public String getDescription();
 
 }

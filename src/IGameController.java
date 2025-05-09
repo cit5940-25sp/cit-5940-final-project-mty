@@ -1,41 +1,27 @@
 import java.io.IOException;
 import java.util.List;
 
+// Orchestrates the game loop: player input -> validation -> update state -> update view (part of controller)
 public interface IGameController {
 
-    /*
-    initializes the game, sets up players, loads movie data, pick randomized movie to start with
-     */
+    // Initializes the game, players, and shows introductory messages
     public void initializeGame(List<IMovie> movieList);
 
-    /*
-    starts the main game loop and handles turn-based logic
-     */
+    // Starts the game loop
     public void startGame() throws IOException;
 
-    /*
-    handles input from current player
-    parameter: input typed by player
-     */
+    // Handles player input
     public void handlePlayerInput(String input);
 
-    /*
-    advances to the next player after valid move or time out
-     */
+    // Goes to next turn
     public void nextTurn();
 
-    /*
-    checks if the game is over (win condition met or player timed out)
-     */
+    // Returns whether game is over
     public boolean isGameOver();
 
-    /*
-    ends the game and triggers gameView to display final result
-     */
+    // Ends the game
     public void endGame();
 
-    /*
-    handles case where timer runs out
-     */
+    // Handles player timeout
     public void handleTimeout();
 }

@@ -2,7 +2,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.time.Clock;
 import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class TestGameController {

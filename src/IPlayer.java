@@ -1,45 +1,32 @@
 import java.util.List;
 
+// Tracks information on each player (scores + movies already played) (part of model)
 public interface IPlayer {
 
-    /*
-    returns the player's name
-     */
+    // Gets player name
     public String getName();
 
-    /*
-    returns the list of movies the player has used
-     */
+    // Gets list of played movies
     public List<IMovie> getPlayedMovies();
 
-    /*
-    adds the movie to the player's history
-    parameter: movie played this term
-     */
+    // Adds movie to played movies
     public void addPlayedMovie(IMovie movie);
 
-    /*
-    returns true if player has met their win condition
-     */
+    // Checks if player has won by meeting win condition
     public boolean hasWon();
 
-    /*
-    returns a description of the win condition
-     */
+    // Gets win condition description
     public String getWinConditionDescription();
 
-    /*
-    returns the player's win condition strategy object
-     */
+    // Gets win condition strategy
     public IWinConditionStrategy getWinConditionStrategy();
 
+    // Sets win condition strategy
     public void setWinConditionStrategy(IWinConditionStrategy winConditionStrategy);
 
-    /*
-    returns the player's score
-     */
-
+    // Gets player score
     public int getScore();
 
+    // Sets player score
     public void setScore(int score);
 }

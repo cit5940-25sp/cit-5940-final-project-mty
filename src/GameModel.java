@@ -1,6 +1,6 @@
 import java.util.*;
 
-// Tracks game state (model)
+// Maintains game state, players, and movie history (part of model)
 public class GameModel implements IGameModel {
 
     private List<IPlayer> players;
@@ -15,6 +15,7 @@ public class GameModel implements IGameModel {
     private IPlayer player2;
     private Map<Integer, IMovie> movies;
 
+    // Constructor
     public GameModel() {
         this.recentHistory = new ArrayList<>();
         this.usedMovies = new HashSet<>();
@@ -22,6 +23,7 @@ public class GameModel implements IGameModel {
         this.connectionValidator = new ConnectionValidator();
     }
 
+    // Initializes players, loads movies, and sets win conditions
     @Override
     public void initializePlayers() {
         Player player1 = new Player("Player 1");
@@ -69,6 +71,7 @@ public class GameModel implements IGameModel {
         this.currentPlayerIndex = 0;
     }
 
+    // Loads movie data from CSV files
     @Override
     public Map<Integer, IMovie> loadMovieData(String moviesCsvFile, String creditsCsvFile) {
         MovieIndex movieIndex = new MovieIndex();
@@ -77,36 +80,44 @@ public class GameModel implements IGameModel {
         return movies;
     }
 
+    // Sets starting movie to currentMovie
     @Override
     public void setStartingMovie(IMovie movie) {
         this.currentMovie = movie;
     }
 
+    // Gets list of players
     @Override
     public List<IPlayer> getPlayers() {
         return players;
     }
 
+    // Gets current player
     @Override
     public IPlayer getCurrentPlayer() {
         return players.get(currentPlayerIndex);
     }
 
+    // Switches to next player in the game
     @Override
     public void switchToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         roundCount++;
     }
 
+    // Gets current movie
     @Override
     public IMovie getCurrentMovie() {
         return currentMovie;
     }
 
+    // Sets current movie
+    @Override
     public void setCurrentMovie(IMovie currentMovie) {
         this.currentMovie = currentMovie;
     }
 
+    // Checks if a move is valid
     @Override
     public boolean isValidMove(String movieTitle) {
         MovieIndex movieIndex = new MovieIndex();
@@ -124,6 +135,7 @@ public class GameModel implements IGameModel {
         return !shared.isEmpty();
     }
 
+    // Makes move, updates movie history, and updates score
     @Override
     public void makeMove(String movieTitle) {
         MovieIndex movieIndex = new MovieIndex();
@@ -156,6 +168,7 @@ public class GameModel implements IGameModel {
         getCurrentPlayer().setScore(currentPlayerScore);
     }
 
+    // Checks whether player has won
     @Override
     public boolean checkWinCondition(IPlayer player) {
         boolean won = player.hasWon();
@@ -165,26 +178,31 @@ public class GameModel implements IGameModel {
         return won;
     }
 
+    // Checks whether game is over
     @Override
     public boolean isGameOver() {
         return winner != null;
     }
 
+    // Gets the winner
     @Override
     public IPlayer getWinner() {
         return winner;
     }
 
+    // Gets recent history of played movies
     @Override
     public List<IMovie> getRecentHistory() {
         return new ArrayList<>(recentHistory);
     }
 
+    // Gets round count
     @Override
     public int getRoundCount() {
         return roundCount;
     }
 
+    // Gets shared connections
     private List<String> getSharedConnections(IMovie a, IMovie b) {
         Set<String> contributorsA = a.getAllContributors();
         Set<String> contributorsB = b.getAllContributors();
@@ -198,21 +216,25 @@ public class GameModel implements IGameModel {
         return shared;
     }
 
+    // Gets Player 1
     @Override
     public IPlayer getPlayer1() {
         return player1;
     }
 
+    // Gets Player 2
     @Override
     public IPlayer getPlayer2() {
         return player2;
     }
 
+    // Gets movies
     @Override
     public Map<Integer, IMovie> getMovies() {
         return movies;
     }
 
+    // Converts a map to a list of movies
     @Override
     public List<IMovie> convertMapToListOfMovies(Map<Integer, IMovie> movies) {
         List<IMovie> movieList = new ArrayList<>();

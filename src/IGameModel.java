@@ -1,82 +1,63 @@
 import java.util.List;
 import java.util.Map;
 
+// Maintains game state, players, and movie history (part of model)
 public interface IGameModel {
 
-    /*
-    initializes the player objects with names and win conditions
-     */
+    // Initializes players, loads movies, and sets win conditions
     public void initializePlayers();
 
-    /*
-    loads all movie in the model via the movie index
-     */
+    // Loads movie data from CSV files
     public Map<Integer, IMovie> loadMovieData(String moviesCsvFile, String creditsCsvFile);
 
+    // Sets starting movie to currentMovie
     public void setStartingMovie(IMovie movie);
 
-    /*
-    returns list of players in the game
-     */
+    // Gets list of players
     public List<IPlayer> getPlayers();
 
-    /*
-    returns the current player whose turn it is
-     */
+    // Gets current player
     public IPlayer getCurrentPlayer();
 
-    /*
-    switches to next player
-     */
+    // Switches to next player in the game
     public void switchToNextPlayer();
 
-    /*
-    returns the current movie in play
-     */
+    // Gets current movie
     public IMovie getCurrentMovie();
 
-    /*
-    checks if given input is valid move
-    (is valid move title && connects to current movie && has not been used)
-     */
+    // Sets current movie
+    public void setCurrentMovie(IMovie currentMovie);
+
+    // Checks if a move is valid
     public boolean isValidMove(String movieTitle);
 
-    /*
-    makes the move with the given movie title and updates the gamestate
-     */
+    // Makes move, updates movie history, and updates score
     public void makeMove(String movieTitle);
 
-    /*
-    returns true if given player has met their win condition
-     */
+    // Checks whether player has won
     public boolean checkWinCondition(IPlayer player);
 
-    /*
-    returns true if the game has ended
-    (if player wins or no valid moves remain or player times out)
-     */
+    // Checks whether game is over
     public boolean isGameOver();
 
-    /*
-    returns the winner of the game or null if no one has won yet
-     */
+    // Gets the winner
     public IPlayer getWinner();
 
-    /*
-    returns a list of last 5 played movies
-     */
+    // Gets recent history of played movies
     public List<IMovie> getRecentHistory();
 
-    /*
-    returns the number of rounds played so far
-     */
+    // Gets round count
     public int getRoundCount();
 
+    // Gets Player 1
     public IPlayer getPlayer1();
 
+    // Gets Player 2
     public IPlayer getPlayer2();
 
+    // Gets movies
     public Map<Integer, IMovie> getMovies();
 
+    // Converts a map to a list of movies
     public List<IMovie> convertMapToListOfMovies(Map<Integer, IMovie> movies);
 }

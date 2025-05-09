@@ -1,12 +1,8 @@
-import com.googlecode.lanterna.terminal.Terminal;
-
 import java.io.IOException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -29,6 +25,5 @@ public class Main {
 
         controller.initializeGame(movieList);
         controller.startGame();
-
     }
 }

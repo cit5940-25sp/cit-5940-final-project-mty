@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.time.Clock;
 import java.util.*;
 
-// Orchestrates the game loop: player input -> validation -> update state -> update view (controller)
+// Orchestrates the game loop: player input -> validation -> update state -> update view (part of controller)
 public class GameController implements IGameController {
     private Player player1;
     private Player player2;
@@ -15,6 +15,7 @@ public class GameController implements IGameController {
     private MovieIndex movieIndex;
     private ConnectionValidator connectionValidator;
 
+    // Constructor
     public GameController(Clock clock, List<IMovie> movies, TerminalWithSuggestions terminal, ConnectionValidator connectionValidator, GameModel gameModel) {
         this.player1 = (Player) gameModel.getPlayer1();
         this.player2 = (Player) gameModel.getPlayer2();
@@ -31,6 +32,7 @@ public class GameController implements IGameController {
         movieIndex.loadCast("tmdb_5000_credits.csv", loadedMovies);
     }
 
+    // Initializes the game, players, and shows introductory messages
     @Override
     public void initializeGame(List<IMovie> movieList) {
 
@@ -51,6 +53,7 @@ public class GameController implements IGameController {
         gameModel.setStartingMovie(start);
     }
 
+    // Starts the game loop
     @Override
     public void startGame() throws IOException {
         while (!gameOver) {
@@ -99,6 +102,7 @@ public class GameController implements IGameController {
         }
     }
 
+    // Checks if movie exists in moveList
     private boolean movieExists(String title) {
         for (IMovie movie : movieList) {
             if (movie.getTitle().equalsIgnoreCase(title)) {
@@ -108,6 +112,7 @@ public class GameController implements IGameController {
         return false;
     }
 
+    // Handles player input
     @Override
     public void handlePlayerInput(String input) {
         if (!gameModel.isValidMove(input)) {
@@ -118,6 +123,7 @@ public class GameController implements IGameController {
         }
     }
 
+    // Goes to next turn
     @Override
     public void nextTurn() {
         gameModel.switchToNextPlayer();
@@ -128,16 +134,19 @@ public class GameController implements IGameController {
         }
     }
 
+    // Returns whether game is over
     @Override
     public boolean isGameOver() {
         return gameOver;
     }
 
+    // Ends the game
     @Override
     public void endGame() {
         gameOver = true;
     }
 
+    // Handles player timeout
     @Override
     public void handleTimeout() {
         gameView.showTimeout(currentPlayer);
